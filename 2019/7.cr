@@ -74,20 +74,9 @@ def amplify(phase_settings : Array(Int32))
 end
 
 inputs = [5, 6, 7, 8, 9]
-indexes = inputs.map { 0 }
 
-i = 0
 max = 0
-while i < 5
-  if indexes[i] < i
-    j = i % 2 == 0 ? 0 : indexes[i]
-    inputs[i], inputs[j] = inputs[j], inputs[i]
-    max = [amplify(inputs), max].max
-    indexes[i] += 1;
-    i = 0;
-  else
-    indexes[i] = 0;
-    i += 1;
-  end
+inputs.each_permutation do |permutation|
+  max = [amplify(permutation), max].max
 end
 puts max
