@@ -42,7 +42,7 @@ class Program
       visited.add(cell)
 
       @shortest_paths[start][cell_value] = { depth, required_keys } if KEYS.includes? cell_value
-      required_keys = required_keys + [cell_value.downcase] if DOORS.includes? cell_value
+      required_keys = required_keys + [cell_value.downcase] if KEYS.includes? cell_value.downcase
       adjacent_cells(cell).each { |next_cell| queue.push({next_cell, depth + 1, required_keys}) }
     end
   end
