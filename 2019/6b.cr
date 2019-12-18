@@ -1,22 +1,26 @@
 class Program
   def initialize()
-    @hash = Hash(String, Array(String)).new
-    @visited = Hash(String, Bool).new
+    @hash = Hash(String, Array(String)).new { [] of String }
+    @visited = Set(String).new
 
     inputs = File.read("6.txt").split
     inputs.each do |line|
       center, orbiter = line.split(')')
-      @hash[center] = @hash.fetch(center, [] of String).push(orbiter)
-      @hash[orbiter] = @hash.fetch(orbiter, [] of String).push(center)
+      @hash[center] = @hash[center].push(orbiter)
+      @hash[orbiter] = @hash[orbiter].push(center)
     end
   end
 
   def visited?(node : String)
-    @visited.fetch(node, false)
+    @visited.includes?(node)
+  end
+
+  def visit(node : String)
+    @visited.add(node)
   end
 
   def bfs(node : String, depth : Int32)
-    @hash.fetch(node, [] of String).each { |child| dfs(child, depth + 1) }
+    @hash[node].each { |child| dfs(child, depth + 1) }
   end
 
   def execute
@@ -28,8 +32,8 @@ class Program
         current = queue.shift
         unless visited?(current)
           return distance if current == "SAN"
-          queue += @hash.fetch(current, [] of String)
-          @visited[current] = true
+          queue += @hash[current]
+          visit(current)
         end
       end
       distance += 1

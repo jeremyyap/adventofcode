@@ -20,7 +20,7 @@ class Program
   end
 
   def execute(fuel)
-    requirements = Hash(String, Int64).new
+    requirements = Hash(String, Int64).new { 0 }
     requirements["FUEL"] = fuel.to_i64
     ore = 0.to_i64
 
@@ -34,7 +34,7 @@ class Program
             if type == "ORE"
               ore += input_qty * multiplier
             else
-              requirements[type] = requirements.fetch(type, 0.to_i64) + input_qty * multiplier
+              requirements[type] = requirements[type] + input_qty * multiplier
             end
           end
         end

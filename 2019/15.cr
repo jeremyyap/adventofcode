@@ -32,8 +32,8 @@ spawn do
   Intcode.new(instructions, input, output).execute
 end
 
-map = Hash(Coordinate, Cell).new
-depths = Hash(Coordinate, Int32).new
+map = Hash(Coordinate, Cell).new { Cell::Wall }
+depths = Hash(Coordinate, Int32).new { 99999 }
 location = { 0, 0 }
 next_location = { 0, 1 }
 direction = Direction::North
@@ -50,10 +50,10 @@ oxygen_location = { 0, 0 }
   when Cell::Wall
     depths[next_location] = 99999
   when Cell::Empty
-    depths[next_location] = [depths.fetch(next_location, 99999), depths[location] + 1].min
+    depths[next_location] = [depths[next_location], depths[location] + 1].min
     location = next_location
   when Cell::Oxygen
-    depths[next_location] = [depths.fetch(next_location, 99999), depths[location] + 1].min
+    depths[next_location] = [depths[next_location], depths[location] + 1].min
     location = next_location
     oxygen_location = location
   end
@@ -100,7 +100,7 @@ while !queue.empty?
   current = queue.shift
   Direction.each do |direction|
     possible_move = possible_moves(current)[direction.to_i]
-    if map.fetch(possible_move, Cell::Wall) != Cell::Wall && !depths.has_key?(possible_move)
+    if map[possible_move] != Cell::Wall && !depths.has_key?(possible_move)
       queue.push(possible_move)
       depths[possible_move] = depths[current] + 1
     end

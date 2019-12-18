@@ -14,7 +14,7 @@ enum Tile
   Ball
 end
 
-screen = Hash(Coordinate, Tile).new
+screen = Hash(Coordinate, Tile).new { Tile::Empty }
 
 spawn do
   Intcode.new(instructions, input, output).execute
@@ -36,7 +36,7 @@ spawn do
       score = value
     else
       pixel = {x, y}
-      old_tile = screen.fetch({x, y}, Tile::Empty)
+      old_tile = screen[pixel]
       new_tile = Tile.new(value)
       screen[pixel] = new_tile
 

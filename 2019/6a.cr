@@ -1,18 +1,18 @@
 class Program
   def initialize()
-    @hash = Hash(String, Array(String)).new
+    @hash = Hash(String, Array(String)).new { [] of String }
     @count = 0
 
     inputs = File.read("6.txt").split
     inputs.each do |line|
       center, orbiter = line.split(')')
-      @hash[center] = @hash.fetch(center, [] of String).push(orbiter)
+      @hash[center] = @hash[center].push(orbiter)
     end
   end
 
   def dfs(node : String, depth : Int32)
     @count += depth
-    @hash.fetch(node, [] of String).each { |child| dfs(child, depth + 1) }
+    @hash[node].each { |child| dfs(child, depth + 1) }
   end
 
   def execute

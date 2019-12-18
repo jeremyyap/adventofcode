@@ -11,7 +11,7 @@ spawn do
 end
 
 def read_map(output)
-  map = Hash(Coordinate, Char).new
+  map = Hash(Coordinate, Char).new { '.' }
   row = 0
   col = 0
   while true
@@ -34,10 +34,10 @@ sum = 0
 map.each do |coordinate, value|
   row, col = coordinate
   if value == '#' &&
-    map.fetch({row-1,col}, '.') == '#' &&
-    map.fetch({row+1,col}, '.') == '#' &&
-    map.fetch({row,col-1}, '.') == '#' &&
-    map.fetch({row,col+1}, '.') == '#'
+    map[{row-1,col}] == '#' &&
+    map[{row+1,col}] == '#' &&
+    map[{row,col-1}] == '#' &&
+    map[{row,col+1}] == '#'
     sum += (row) * (col)
   end
 end
@@ -47,13 +47,21 @@ puts sum
 
 # Part 2
 
-# position =
+enum Direction
+  Up
+  Right
+  Down
+  Left
+end
 
-# image.each_with_index do |row, i|
-#   row.each_with_index do |cell, j|
-#     if image[i][j] == '^'
-#   end
-# end
+position = { 0, 0 }
+direction = Direction::Up
+
+map.each do |coordinate, value|
+  position = coordinate if map[coordinate] == '^'
+end
+
+
 
 def read_prompt(output)
   while (number = output.receive) != 10

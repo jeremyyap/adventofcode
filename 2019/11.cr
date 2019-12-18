@@ -21,7 +21,7 @@ enum Direction
   Left
 end
 
-panels = Hash(Coordinate, Int32).new
+panels = Hash(Coordinate, Int32).new { Color::Black.to_i }
 location = { 0, 0 }
 facing = Direction::Up.to_i
 moveX = [0, 1, 0, -1]
@@ -30,7 +30,7 @@ panels[location] = Color::White.to_i
 
 spawn do
   while true
-    input.send(panels.fetch(location, Color::Black.to_i64).to_i64)
+    input.send(panels[location].to_i64)
     panels[location] = output.receive.to_i
     facing = output.receive == 1 ? (facing - 1) % 4 : (facing + 1) % 4
     location = { location[0] + moveX[facing], location[1] + moveY[facing] }

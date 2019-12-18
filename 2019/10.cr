@@ -51,11 +51,11 @@ puts location
 # Part 2
 asteroids.delete(location)
 
-hash = Hash(Coordinate, Array(Coordinate)).new
+hash = Hash(Coordinate, Array(Coordinate)).new { [] of Coordinate }
 
 asteroids.each_with_index do |asteroid|
   key = gradient(location, asteroid)
-  hash[key] = hash.fetch(key, [] of Coordinate).push(asteroid)
+  hash[key] = hash[key].push(asteroid)
 end
 
 hash.each_key do |key|
