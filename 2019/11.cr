@@ -1,4 +1,5 @@
 require "./intcode"
+require "../utils/coordinate"
 
 input = Channel(Int64).new
 output = Channel(Int64).new
@@ -7,8 +8,6 @@ instructions = File.read("11.txt").split(',').map(&.to_i64)
 spawn do
   Intcode.new(instructions, input, output).execute
 end
-
-alias Coordinate = Tuple(Int32, Int32)
 
 enum Color
   Black
@@ -40,10 +39,4 @@ end
 
 Fiber.yield
 
-min_x, max_x = panels.keys.map { |key| key[0] }.minmax
-min_y, max_y = panels.keys.map { |key| key[1] }.minmax
-
-image = Array.new(max_y - min_y + 1) { Array.new(max_x - min_x, ' ') }
-
-panels.each { |coord, value| image[coord[1] - min_y][coord[0] - min_x] = '*' if value == Color::White.to_i }
-image.each { |row| puts row.join(' ') }
+print_image(panels) { |coord, value| value == Color::White.to_i ? '*' : ' ' }

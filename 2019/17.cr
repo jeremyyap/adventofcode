@@ -1,4 +1,5 @@
 require "./intcode"
+require "../utils/coordinate"
 
 input = Channel(Int64).new
 output = Channel(Int64).new
@@ -9,43 +10,50 @@ spawn do
   Intcode.new(instructions, input, output).execute
 end
 
-def read_image(output)
-  image = Array.new(45) { Array.new(51, ' ') }
-  row = 1
-  col = 1
-  while row <= 44
+def read_map(output)
+  map = Hash(Coordinate, Char).new
+  row = 0
+  col = 0
+  while true
     number = output.receive
+    break if number == 10 && col == 0
 
     if number == 10
       row += 1
-      col = 1
+      col = 0
     else
-      image[row][col] = number.as(Int64).chr
+      map[{row,col}] = number.as(Int64).chr
       col += 1
     end
   end
-  image
+  map
 end
 
-image = read_image(output)
+map = read_map(output)
 sum = 0
-image.each_with_index do |row, i|
-  row.each_with_index do |cell, j|
-    if image[i][j] == '#' &&
-      image[i-1][j] == '#' &&
-      image[i+1][j] == '#' &&
-      image[i][j-1] == '#' &&
-      image[i][j+1] == '#'
-      sum += (i-1) * (j-1)
-    end
+map.each do |coordinate, value|
+  row, col = coordinate
+  if value == '#' &&
+    map.fetch({row-1,col}, '.') == '#' &&
+    map.fetch({row+1,col}, '.') == '#' &&
+    map.fetch({row,col-1}, '.') == '#' &&
+    map.fetch({row,col+1}, '.') == '#'
+    sum += (row) * (col)
   end
 end
 
-image.each { |row| puts row.join("") }
+print_image(map)
 puts sum
-puts
 
 # Part 2
+
+# position =
+
+# image.each_with_index do |row, i|
+#   row.each_with_index do |cell, j|
+#     if image[i][j] == '^'
+#   end
+# end
 
 def read_prompt(output)
   while (number = output.receive) != 10
@@ -67,9 +75,9 @@ functions.each do |function|
   puts function
   function.each_char { |char| input.send char.ord.to_i64 }
 end
-
-image = read_image(output)
-image.each { |row| puts row.join("") }
-
 puts output.receive.chr
+
+map = read_map(output)
+print_image(map)
+
 puts output.receive

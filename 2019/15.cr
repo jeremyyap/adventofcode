@@ -1,10 +1,9 @@
 require "./intcode"
+require "../utils/coordinate"
 
 input = Channel(Int64).new
 output = Channel(Int64).new
 instructions = File.read("15.txt").split(',').map(&.to_i64)
-
-alias Coordinate = Tuple(Int32, Int32)
 
 enum Direction
   North
@@ -18,19 +17,6 @@ enum Cell
   Empty
   Oxygen
   Unexplored
-end
-
-def opposite(direction : Direction)
-  case direction
-  when Direction::North
-    Direction::South
-  when Direction::South
-    Direction::North
-  when Direction::West
-    Direction::East
-  else
-    Direction::West
-  end
 end
 
 def possible_moves(location : Coordinate)
@@ -91,22 +77,18 @@ oxygen_location = { 0, 0 }
   end
 end
 
-min_x, max_x = map.keys.map { |key| key[0] }.minmax
-min_y, max_y = map.keys.map { |key| key[1] }.minmax
-
-image = Array.new(max_y - min_y + 1) { Array.new(max_x - min_x + 1, ' ') }
-
-map.each do |coord, value|
-  image[coord[1] - min_y][coord[0] - min_x] = case value
+print_image(map) do |coord, value|
+  case value
   when Cell::Wall
     '#'
   when Cell::Empty
     coord == {0,0} ? 'D' : '.'
-  else
+  when Cell::Oxygen
     'O'
+  else
+    raise "Invalid cell type"
   end
 end
-image.each { |row| puts row.join(' ') }
 
 puts depths[oxygen_location]
 

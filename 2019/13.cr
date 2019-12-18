@@ -1,11 +1,10 @@
 require "./intcode"
+require "../utils/coordinate"
 
 input = Channel(Int64).new
 output = Channel(Int64).new
 instructions = File.read("13.txt").split(',').map(&.to_i64)
 instructions[0] = 2
-
-alias Coordinate = Tuple(Int32, Int32)
 
 enum Tile
   Empty

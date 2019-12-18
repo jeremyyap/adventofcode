@@ -1,4 +1,4 @@
-alias Coordinate = Tuple(Int32, Int32)
+require "../utils/coordinate"
 
 def gradient(a : Coordinate, b : Coordinate)
   dx = b[0] - a[0]
