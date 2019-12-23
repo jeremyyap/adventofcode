@@ -2,14 +2,19 @@ class Intcode
   @instructions: Array(Int64)
   @parameter_modes: Array(Int8)
   @pos: Int64
+  @blocking: Bool
   @input: Channel(Int64)
   @output: Channel(Int64)
   @relative_base: Int64
 
-  def initialize(instructions : Array(Int64), input : Channel(Int64), output : Channel(Int64))
+  def initialize(instructions : Array(Int64),
+                 input : Channel(Int64),
+                 output : Channel(Int64),
+                 blocking : Bool = true)
     @instructions = instructions
     @parameter_modes = [] of Int8
     @pos = 0
+    @blocking = blocking
     @input = input
     @output = output
     @relative_base = 0
@@ -48,6 +53,16 @@ class Intcode
     @pos += 1
   end
 
+  def receive_input
+    return @input.receive if @blocking
+    select
+    when input = @input.receive
+      input
+    else
+      -1.to_i64
+    end
+  end
+
   def execute
     while true
       instruction = @instructions[@pos]
@@ -56,29 +71,30 @@ class Intcode
       opcode = instruction % 100
 
       case opcode
-        when 1
-          set_param(get_param + get_param)
-        when 2
-          set_param(get_param * get_param)
-        when 3
-          set_param(@input.receive)
-        when 4
-          @output.send(get_param)
-        when 5
-          @pos = get_param == 0 ? @pos + 1 : get_param
-        when 6
-          @pos = get_param == 0 ? get_param : @pos + 1
-        when 7
-          set_param(get_param < get_param ? 1.to_i64 : 0.to_i64)
-        when 8
-          set_param(get_param == get_param ? 1.to_i64 : 0.to_i64)
-        when 9
-          @relative_base += get_param
-        when 99
-          break
-        else
-          raise "Invalid opcode"
+      when 1
+        set_param(get_param + get_param)
+      when 2
+        set_param(get_param * get_param)
+      when 3
+        set_param(receive_input)
+      when 4
+        @output.send(get_param)
+      when 5
+        @pos = get_param == 0 ? @pos + 1 : get_param
+      when 6
+        @pos = get_param == 0 ? get_param : @pos + 1
+      when 7
+        set_param(get_param < get_param ? 1.to_i64 : 0.to_i64)
+      when 8
+        set_param(get_param == get_param ? 1.to_i64 : 0.to_i64)
+      when 9
+        @relative_base += get_param
+      when 99
+        break
+      else
+        raise "Invalid opcode"
       end
+      Fiber.yield unless @blocking
     end
   end
 end
