@@ -59,7 +59,7 @@ class Intcode
     when input = @input.receive
       input
     else
-      -1.to_i64
+      -1_i64
     end
   end
 
@@ -84,9 +84,9 @@ class Intcode
       when 6
         @pos = get_param == 0 ? get_param : @pos + 1
       when 7
-        set_param(get_param < get_param ? 1.to_i64 : 0.to_i64)
+        set_param(get_param < get_param ? 1_i64 : 0_i64)
       when 8
-        set_param(get_param == get_param ? 1.to_i64 : 0.to_i64)
+        set_param(get_param == get_param ? 1_i64 : 0_i64)
       when 9
         @relative_base += get_param
       when 99

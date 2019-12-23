@@ -41,7 +41,7 @@ nat_input = Channel(Int64).new(32)
 boot(inputs, outputs)
 spawn route_packets(inputs, outputs, nat_input)
 
-x = y = last_x = last_y = 0.to_i64
+x = y = last_x = last_y = 0_i64
 done = false
 spawn do
   until done

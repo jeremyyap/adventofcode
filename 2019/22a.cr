@@ -27,7 +27,6 @@ class Program
   def execute
     process = File.read("22.txt")[0..-2].split('\n')
     process.each do |step|
-      puts step
       words = step.split(' ')
       if step == "deal into new stack"
         deal_into_new_stack

@@ -22,7 +22,7 @@ class Program
   def execute(fuel)
     requirements = Hash(String, Int64).new { 0 }
     requirements["FUEL"] = fuel.to_i64
-    ore = 0.to_i64
+    ore = 0_i64
 
     while requirements.values.any? { |v| v > 0 }
       requirements.each do |key, required_qty|
@@ -46,7 +46,7 @@ end
 
 available_ore = 1000000000000
 
-min = 0.to_i64
+min = 0_i64
 max = available_ore
 mid = (min + max) / 2
 
