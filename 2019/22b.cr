@@ -1,11 +1,31 @@
+require "big"
+
+struct BigInt
+  def pow(exp, mod)
+    pow(self, exp, mod)
+  end
+
+  def pow(num, exp, mod)
+    return num if exp == 1
+    (pow(num**2 % mod, exp//2, mod) * (exp.odd? ? num : 1)) % mod
+  end
+end
+
 class Program
+  @process: Array(String)
+  @deck_size: BigInt
+  @power: BigInt
+  @target: BigInt
+  @offset: BigInt
+  @multiplier: BigInt
+
   def initialize(deck_size, power, target)
     @process = File.read("22.txt")[0..-2].split("\n").reverse
     @deck_size = deck_size
     @power = power
     @target = target
-    @offset = 0
-    @multiplier = 1
+    @offset = BigInt.new(0)
+    @multiplier = BigInt.new(1)
   end
 
   def deal_into_new_stack
@@ -64,4 +84,4 @@ class Program
   end
 end
 
-puts Program.new(119315717514047, 101741582076661, 2020).execute
+puts Program.new(BigInt.new(119315717514047), BigInt.new(101741582076661), BigInt.new(2020)).execute
