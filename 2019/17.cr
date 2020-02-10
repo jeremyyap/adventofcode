@@ -61,8 +61,6 @@ map.each do |coordinate, value|
   position = coordinate if map[coordinate] == '^'
 end
 
-
-
 def read_prompt(output)
   while (number = output.receive) != 10
     print number.chr
