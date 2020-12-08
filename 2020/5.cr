@@ -5,7 +5,7 @@ class Program
     @inputs = @inputs = File.read("5.txt").split
   end
 
-  def to_binary(str : String)
+  def to_seat_id(str : String)
     str.chars.map do |char|
       case char
         when 'F', 'L'
@@ -13,28 +13,25 @@ class Program
         else # 'B', 'R'
           1
       end
-    end.join
+    end.join.to_i(2)
   end
 
   def execute
     set = Set(Int32).new
     min = Int32::MAX
     max = 0
-    @inputs.map { |input| to_binary(input) }.each do |input|
-      row = (input[0..6]).to_i(2)
-      col = (input[7..-1]).to_i(2)
-      seatId = row * 8 + col
-      min = [min, seatId].min
-      max = [max, seatId].max
-      set.add(seatId)
+    @inputs.map { |input| to_seat_id(input) }.each do |seat_id|
+      min = [min, seat_id].min
+      max = [max, seat_id].max
+      set.add(seat_id)
     end
 
     # Part 1
     puts max
 
     # Part 2
-    (min..max).each do |seatId|
-      puts seatId if !set.includes?(seatId)
+    (min..max).each do |seat_id|
+      puts seat_id if !set.includes?(seat_id)
     end
   end
 end
