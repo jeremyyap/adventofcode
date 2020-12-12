@@ -47,16 +47,6 @@ puts sum
 
 # Part 2
 
-enum Direction
-  Up
-  Right
-  Down
-  Left
-end
-
-position = { 0, 0 }
-direction = Direction::Up
-
 map.each do |coordinate, value|
   position = coordinate if map[coordinate] == '^'
 end
@@ -67,6 +57,8 @@ def read_prompt(output)
   end
   print ' '
 end
+
+# Eye power
 
 functions = [
   "A,B,A,C,B,A,C,B,A,C\n",
