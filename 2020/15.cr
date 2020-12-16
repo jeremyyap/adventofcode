@@ -1,5 +1,3 @@
-require "big"
-
 class Program
   @input: Array(Int32)
 
