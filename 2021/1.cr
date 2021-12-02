@@ -6,11 +6,11 @@ class Program
   end
 
   def part_1
-    @inputs.each_cons(2).count { |cons| cons[0] < cons[1] }
+    @inputs.each_cons(2).count { |(a, b)| a < b }
   end
 
   def part_2
-    @inputs.each_cons(4).count { |cons| cons[0] < cons[3] }
+    @inputs.each_cons(4).count { |(a, _, _, b)| a < b }
   end
 
   def execute
