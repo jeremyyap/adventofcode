@@ -75,8 +75,4 @@ end
 
 inputs = [5, 6, 7, 8, 9]
 
-max = 0
-inputs.each_permutation do |permutation|
-  max = [amplify(permutation), max].max
-end
-puts max
+puts inputs.each_permutation.max_of { |permutation| amplify(permutation) }
