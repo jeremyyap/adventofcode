@@ -11,7 +11,7 @@ class Program
   @numbers: Array(SFNumber)
 
   def initialize
-    inputs = File.read("18.txt").strip.split("\n")
+    inputs = File.read("18.txt").chomp.split("\n")
     @numbers = inputs.map { |line| parse(line).as(SFNumber) }
   end
 

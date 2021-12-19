@@ -3,7 +3,7 @@ class Program
 
   def initialize
     @inputs = Hash(String, Array(String)).new { [] of String }
-    File.read("12.txt").strip.split("\n").map do |line|
+    File.read("12.txt").chomp.split("\n").map do |line|
       parts = line.split("-")
       @inputs[parts[0]] <<= parts[1]
       @inputs[parts[1]] <<= parts[0]

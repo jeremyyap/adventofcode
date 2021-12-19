@@ -3,7 +3,7 @@ class Program
   @insertion_rules: Array(Tuple(Char, Char, Char))
 
   def initialize
-    input = File.read("14.txt").strip.split("\n\n")
+    input = File.read("14.txt").chomp.split("\n\n")
     @template = input[0]
     @insertion_rules = input[1].split("\n").map do |line|
       { line[0], line[1], line[-1] }

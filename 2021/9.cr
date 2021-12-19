@@ -2,7 +2,7 @@ class Program
   @inputs: Array(Array(Int32))
 
   def initialize
-    @inputs = File.read("9.txt").strip.split("\n").map { |line| line.chars.map { |c| c.to_i } }
+    @inputs = File.read("9.txt").chomp.split("\n").map { |line| line.chars.map { |c| c.to_i } }
   end
 
   def part_1

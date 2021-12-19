@@ -2,7 +2,7 @@ class Program
   @inputs: Array(String)
 
   def initialize
-    @inputs = File.read("8.txt").strip.split("\n")
+    @inputs = File.read("8.txt").chomp.split("\n")
   end
 
   def part_1

@@ -2,7 +2,7 @@ class Program
   @input: Array(Int32)
 
   def initialize
-    @input = File.read("16.txt").strip.chars.flat_map { |c| c.to_i(16).to_s(2).rjust(4, '0').chars.map(&.to_i) }
+    @input = File.read("16.txt").chomp.chars.flat_map { |c| c.to_i(16).to_s(2).rjust(4, '0').chars.map(&.to_i) }
   end
 
   def parse_literal(start : Int32)

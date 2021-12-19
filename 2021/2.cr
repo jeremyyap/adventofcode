@@ -2,7 +2,7 @@ class Program
   @inputs: Array(Tuple(String, Int32))
 
   def initialize
-    @inputs = File.read("2.txt")[0..-2].split("\n").map do |line|
+    @inputs = File.read("2.txt").chomp.split("\n").map do |line|
       command, x = line.split(" ")
       { command, x.to_i }
     end

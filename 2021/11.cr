@@ -2,7 +2,7 @@ class Program
   @inputs: Array(Array(Int32))
 
   def initialize
-    @inputs = File.read("11.txt").strip.split("\n").map { |line| line.chars.map(&.to_i) }
+    @inputs = File.read("11.txt").chomp.split("\n").map { |line| line.chars.map(&.to_i) }
   end
 
   def adjacent(i : Int32, j : Int32)

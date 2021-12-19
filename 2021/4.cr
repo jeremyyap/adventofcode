@@ -5,7 +5,7 @@ class Program
   @boards: Array(Array(Array(Int32)))
 
   def initialize
-    input = File.read("4.txt")[0..-2].split("\n\n")
+    input = File.read("4.txt").chomp.split("\n\n")
     @numbers = input[0].split(",").map { |c| c.to_i }
     @called_numbers = Set(Int32).new
     @last_called = -1

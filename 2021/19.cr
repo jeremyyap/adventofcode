@@ -4,7 +4,7 @@ class Program
   @inputs: Array(Array(Triple))
 
   def initialize
-    @inputs = File.read("19.txt").strip.split("\n\n").map do |chunk|
+    @inputs = File.read("19.txt").chomp.split("\n\n").map do |chunk|
       chunk.split("\n")[1..-1].map do |row|
         Triple.from(row.split(",").map(&.to_i))
       end

@@ -3,7 +3,7 @@ class Program
   @folds: Array(Tuple(String, Int32))
 
   def initialize
-    input = File.read("13.txt").strip.split("\n\n")
+    input = File.read("13.txt").chomp.split("\n\n")
     @dots = input[0].split("\n").map { |row| { row.split(",")[0].to_i, row.split(",")[1].to_i } }
     @folds = input[1].split("\n").map do |line|
       fold = line[11..-1]

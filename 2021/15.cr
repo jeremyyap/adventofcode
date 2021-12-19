@@ -7,7 +7,7 @@ class Program
   @width: Int32
 
   def initialize
-    @inputs = File.read("15.txt").strip.split("\n").map { |line| line.chars.map(&.to_i) }
+    @inputs = File.read("15.txt").chomp.split("\n").map { |line| line.chars.map(&.to_i) }
     @height = @inputs.size
     @width = @inputs[0].size
   end

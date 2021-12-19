@@ -3,7 +3,7 @@ class Program
   @bits: Int32
 
   def initialize
-    @inputs = File.read("3.txt").split
+    @inputs = File.read("3.txt").chomp.split
     @bits = @inputs[0].size
   end
 

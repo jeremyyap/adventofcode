@@ -14,7 +14,7 @@ class Program
   @map: Hash(Tuple(Int32, Int32), Int32)
 
   def initialize
-    @inputs = File.read("5.txt")[0..-2].split("\n").map do |line|
+    @inputs = File.read("5.txt").chomp.split("\n").map do |line|
       p1, p2 = line.split(" -> ")
       p1x, p1y = p1.split(",").map(&.to_i)
       p2x, p2y = p2.split(",").map(&.to_i)

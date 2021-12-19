@@ -2,7 +2,7 @@ class Program
   @inputs: Array(Int32)
 
   def initialize
-    @inputs = File.read("6.txt").strip.split(",").map(&.to_i)
+    @inputs = File.read("6.txt").chomp.split(",").map(&.to_i)
   end
 
   def simulate(days : Int32)

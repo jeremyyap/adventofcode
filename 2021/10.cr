@@ -2,7 +2,7 @@ class Program
   @inputs: Array(Array(Char))
 
   def initialize
-    @inputs = File.read("10.txt").strip.split("\n").map { |line| line.chars }
+    @inputs = File.read("10.txt").chomp.split("\n").map { |line| line.chars }
   end
 
   @@pairs_map = { '(' => ')', '[' => ']', '{' => '}', '<' => '>' }
