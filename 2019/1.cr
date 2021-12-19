@@ -1,13 +1,29 @@
-inputs = File.read("1.txt").split.map(&.to_i)
+class Program
+  @inputs: Array(Int32)
 
-fuels = inputs.map do |x|
-  sum = 0
-  x = x // 3 - 2
-  while x > 0
-    sum += x
-    x = x // 3 - 2
+  def initialize
+    @inputs = File.read("1.txt").chomp.split.map(&.to_i)
   end
-  sum
+
+  def part_1
+    @inputs.sum { |x| x // 3 - 2 }
+  end
+
+  def part_2
+    @inputs.sum do |x|
+      fuel = 0
+      until x <= 0
+        x = x // 3 - 2
+        fuel += x
+      end
+      fuel
+    end
+  end
+
+  def execute
+    puts part_1
+    puts part_2
+  end
 end
 
-puts fuels.sum
+Program.new.execute
