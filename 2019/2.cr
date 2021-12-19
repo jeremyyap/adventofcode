@@ -1,48 +1,38 @@
+require "./intcode"
+
 class Program
-  @instructions: Array(Int32)
-  @pos: Int32
+  @instructions: Array(Int64)
 
-  def initialize(noun : Int32, verb : Int32)
-    @instructions = File.read("2.txt").split(',').map(&.to_i)
-    @instructions[1] = noun
-    @instructions[2] = verb
-    @pos = 0
+  def initialize
+    @instructions = File.read("2.txt").chomp.split(',').map(&.to_i64)
   end
 
-  def get_param
-    val = @instructions[@instructions[@pos]]
-    @pos += 1
-    val
+  def run(noun : Int64, verb : Int64)
+    instructions = @instructions.clone
+    instructions[1] = noun
+    instructions[2] = verb
+    Intcode.new(instructions).execute
+    instructions[0]
   end
 
-  def set_param(value)
-    @instructions[@instructions[@pos]] = value
-    @pos += 1
+  def part_1
+    run(12, 2)
   end
 
-  def execute
-    while true
-      instruction = @instructions[@pos]
-      @pos += 1
-
-      case instruction
-        when 1
-          set_param(get_param + get_param)
-        when 2
-          set_param(get_param * get_param)
-        when 99
-          return @instructions[0]
-        else
-          raise "Invalid opcode"
+  def part_2
+    (1..99).each do |i|
+      (1..99).each do |j|
+        if run(i.to_i64, j.to_i64) == 19690720
+          return 100 * i + j
+        end
       end
     end
   end
-end
 
-(1..99).each do |i|
-  (1..99).each do |j|
-    if Program.new(i, j).execute == 19690720
-      puts 100 * i + j
-    end
+  def execute
+    puts part_1
+    puts part_2
   end
 end
+
+Program.new.execute

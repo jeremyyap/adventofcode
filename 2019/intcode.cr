@@ -3,13 +3,13 @@ class Intcode
   @parameter_modes: Array(Int8)
   @pos: Int64
   @blocking: Bool
-  @input: Channel(Int64)
-  @output: Channel(Int64)
+  @input: Channel(Int64) | Nil
+  @output: Channel(Int64) | Nil
   @relative_base: Int64
 
   def initialize(instructions : Array(Int64),
-                 input : Channel(Int64),
-                 output : Channel(Int64),
+                 input : Channel(Int64) | Nil = nil,
+                 output : Channel(Int64) | Nil = nil,
                  blocking : Bool = true)
     @instructions = instructions
     @parameter_modes = [] of Int8
@@ -54,9 +54,10 @@ class Intcode
   end
 
   def receive_input
-    return @input.receive if @blocking
+    return -1_i64 if @input == nil
+    return @input.not_nil!.receive if @blocking
     select
-    when input = @input.receive
+    when input = @input.not_nil!.receive
       input
     else
       -1_i64
@@ -78,7 +79,7 @@ class Intcode
       when 3
         set_param(receive_input)
       when 4
-        @output.send(get_param)
+        @output.not_nil!.send(get_param) if @output
       when 5
         @pos = get_param == 0 ? @pos + 1 : get_param
       when 6
