@@ -4,7 +4,7 @@ class Program
   @nearby_tickets: Array(Array(Int32))
 
   def initialize
-    rules, my_ticket, nearby_tickets = File.read("16.txt")[0..-2].split("\n\n")
+    rules, my_ticket, nearby_tickets = File.read("16.txt").chomp.split("\n\n")
 
     @rules = rules.split('\n')
     @my_ticket = my_ticket.split('\n')[1].split(',').map(&.to_i)
@@ -23,7 +23,7 @@ class Program
         @rules.each do |rule|
           get_ranges(rule).each { |(min, max)| valid = true if min <= field && field <= max }
         end
-        sum += field if !valid
+        valid ? 0 : field
       end
     end
   end

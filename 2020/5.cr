@@ -2,7 +2,7 @@ class Program
   @inputs: Array(String)
 
   def initialize
-    @inputs = @inputs = File.read("5.txt").split
+    @inputs = @inputs = File.read("5.txt").chomp.split
   end
 
   def to_seat_id(str : String)

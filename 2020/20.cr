@@ -4,7 +4,7 @@ class Program
   @tiles : Hash(Int32, Image)
 
   def initialize
-    tiles = File.read("20.txt")[0..-2].split("\n\n")
+    tiles = File.read("20.txt").chomp.split("\n\n")
 
     @tiles = tiles.map do |tile|
       rows = tile.split('\n')

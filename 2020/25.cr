@@ -3,7 +3,7 @@ class Program
   @door_public_key : Int32
 
   def initialize
-    input = File.read("25.txt")[0..-2].split("\n")
+    input = File.read("25.txt").chomp.split("\n")
     @card_public_key = input[0].to_i
     @door_public_key = input[1].to_i
   end

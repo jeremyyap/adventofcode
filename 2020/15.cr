@@ -2,7 +2,7 @@ class Program
   @input: Array(Int32)
 
   def initialize
-    @input = File.read("15.txt")[0..-2].split(',').map(&.to_i)
+    @input = File.read("15.txt").chomp.split(',').map(&.to_i)
   end
 
   def find_nth(n)

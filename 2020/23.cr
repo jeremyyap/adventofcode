@@ -19,7 +19,7 @@ class Program
   @input : Array(Int32)
 
   def initialize
-    @input = File.read("23.txt")[0..-2].chars.map(&.to_i)
+    @input = File.read("23.txt").chomp.chars.map(&.to_i)
   end
 
   def part_1

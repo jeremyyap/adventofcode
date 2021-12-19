@@ -2,7 +2,7 @@ class Program
   @input: Array(Array(Char))
 
   def initialize
-    @input = File.read("11.txt")[0..-2].split.map(&.chars)
+    @input = File.read("11.txt").chomp.split.map(&.chars)
   end
 
   def fill_seats

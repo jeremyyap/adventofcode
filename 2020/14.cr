@@ -2,7 +2,7 @@ class Program
   @input: Array(String)
 
   def initialize
-    @input = File.read("14.txt")[0..-2].split('\n')
+    @input = File.read("14.txt").chomp.split('\n')
   end
 
   def set_bit(val, bit_idx)

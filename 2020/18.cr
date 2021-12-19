@@ -2,7 +2,7 @@ class Program
   @input : Array(String)
 
   def initialize
-    @input = File.read("18.txt")[0..-2].split('\n')
+    @input = File.read("18.txt").chomp.split('\n')
   end
 
   def part_1
@@ -71,14 +71,13 @@ class Program
         b = stack.pop
         stack.push(op == '+' ? a + b : a * b)
       end
-      puts stack[0]
       sum += stack[0]
     end
     sum
   end
 
   def execute
-    # puts part_1
+    puts part_1
     puts part_2
   end
 end

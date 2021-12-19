@@ -4,7 +4,7 @@ class Program
   @input: Array(String)
 
   def initialize
-    @input = File.read("13.txt")[0..-2].split
+    @input = File.read("13.txt").chomp.split
   end
 
   def extended_gcd(a, b)

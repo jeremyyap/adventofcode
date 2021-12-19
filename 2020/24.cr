@@ -2,7 +2,7 @@ class Program
   @tiles : Array(Array(String))
 
   def initialize
-    @tiles = File.read("24.txt")[0..-2].split("\n").map { |tile| tile.split(/(se|sw|ne|nw|e|w)/).reject("") }
+    @tiles = File.read("24.txt").chomp.split("\n").map { |tile| tile.split(/(se|sw|ne|nw|e|w)/).reject("") }
   end
 
   def execute

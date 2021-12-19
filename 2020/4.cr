@@ -4,7 +4,7 @@ class Program
   @inputs: Array(Hash(String, String))
 
   def initialize
-    @inputs = File.read("4.txt")[0..-2].split("\n\n").map do |passport|
+    @inputs = File.read("4.txt").chomp.split("\n\n").map do |passport|
       passport.split(/\s+/).map { |field| field.split(":") }.to_h
     end
   end

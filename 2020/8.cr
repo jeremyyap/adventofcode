@@ -3,7 +3,7 @@ class Program
   @backup: Array(String)
 
   def initialize
-    @instructions = File.read("8.txt")[0..-2].split('\n')
+    @instructions = File.read("8.txt").chomp.split('\n')
     @backup = @instructions.clone
   end
 
@@ -13,7 +13,7 @@ class Program
     pc = 0
 
     while !visited.includes?(pc) && pc < @instructions.size
-      ran_before.add(pc)
+      visited.add(pc)
       instr = @instructions[pc]
       cmd, val = instr.split(" ")
       acc += val.to_i if cmd == "acc"
@@ -21,7 +21,7 @@ class Program
       pc +=1 if cmd != "jmp"
     end
 
-    return acc, ran_before.includes?(pc)
+    return acc, pc == @instructions.size
   end
 
   def part_1
@@ -36,8 +36,8 @@ class Program
       @instructions[idx] = "jmp " + val if cmd == "nop"
       @instructions[idx] = "nop " + val if cmd == "jmp"
 
-      acc, ran_before = run_code
-      return acc if !ran_before
+      acc, terminated = run_code
+      return acc if terminated
     end
   end
 

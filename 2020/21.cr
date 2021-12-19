@@ -2,7 +2,7 @@ class Program
   @input : Array(String)
 
   def initialize
-    @input = File.read("21.txt")[0..-2].split("\n")
+    @input = File.read("21.txt").chomp.split("\n")
   end
 
   def execute
@@ -11,7 +11,7 @@ class Program
 
     # Food contains allergen but does not contains ingredient => ingredient does not contain allergen
     @input.each_with_index do |food, food_id|
-      ingredients_list, allergens_list = food[0..-2].split(" (contains ")
+      ingredients_list, allergens_list = food.chomp(")").split(" (contains ")
       ingredients = ingredients_list.split(' ')
       allergens = allergens_list.split(", ")
 

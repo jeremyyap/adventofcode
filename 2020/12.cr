@@ -2,7 +2,7 @@ class Program
   @input: Array(String)
 
   def initialize
-    @input = File.read("12.txt")[0..-2].split
+    @input = File.read("12.txt").chomp.split
   end
 
   # 0 = N, 1 = E, 2 = S, 3 = W

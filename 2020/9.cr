@@ -2,7 +2,7 @@ class Program
   @inputs: Array(Int64)
 
   def initialize
-    @inputs = File.read("9.txt")[0..-2].split.map(&.to_i64)
+    @inputs = File.read("9.txt").chomp.split.map(&.to_i64)
   end
 
   def part_1

@@ -4,7 +4,7 @@ class Program
   @memo : Hash(String, Bool)
 
   def initialize
-    rules, messages = File.read("19.txt")[0..-2].split("\n\n")
+    rules, messages = File.read("19.txt").chomp.split("\n\n")
 
     @rules = Hash(Int32, String).new
     rules.split('\n').each do |rule|

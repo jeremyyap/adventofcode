@@ -5,7 +5,7 @@ class Program
   @input : Array(Array(Char))
 
   def initialize
-    @input = File.read("17.txt")[0..-2].split('\n').map(&.chars)
+    @input = File.read("17.txt").chomp.split('\n').map(&.chars)
   end
 
   def neighbours(cube : Coordinate3)

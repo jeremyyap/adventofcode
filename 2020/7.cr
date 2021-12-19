@@ -3,7 +3,7 @@ class Program
 
   def initialize
     @rules = Hash(String, Array(Tuple(Int32, String))).new
-    File.read("7.txt")[0..-2].split('\n').each do |rule|
+    File.read("7.txt").chomp.split('\n').each do |rule|
       container, contents = rule.split(" bags contain ")
       content_bags = contents.split(/(?: bag| bags)(?:,|\.)\s?/)[0..-2]
 

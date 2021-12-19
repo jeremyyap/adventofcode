@@ -2,7 +2,7 @@ class Program
   @input : Array(String)
 
   def initialize
-    @input = File.read("22.txt")[0..-2].split("\n\n")
+    @input = File.read("22.txt").chomp.split("\n\n")
   end
 
   def score(d1, d2)
