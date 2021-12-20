@@ -11,7 +11,7 @@ class Program
 
     loop do
       is_last_group = @input[pointer] == 0
-      binary_str += @input[(pointer+1)..(pointer+4)].join
+      binary_str += @input[pointer+1,4].join
       pointer += 5
       return binary_str.to_i64(2), pointer if is_last_group
     end
@@ -30,8 +30,8 @@ class Program
   end
 
   def parse(start : Int32)
-    packet_version = @input[start..(start+2)].join.to_i(2)
-    packet_type = @input[(start+3)..(start+5)].join.to_i(2)
+    packet_version = @input[start,3].join.to_i(2)
+    packet_type = @input[start+3,3].join.to_i(2)
 
     return packet_version, *parse_literal(start) if packet_type == 4
 
@@ -46,13 +46,13 @@ class Program
     }
 
     if @input[start+6] == 0 # length type bit
-      sub_packets_length = @input[(start+7)..(start+21)].join.to_i(2)
+      sub_packets_length = @input[start+7,15].join.to_i(2)
       pointer = start + 22
       while pointer < sub_packets_length + start + 22
         proc.call
       end
     else
-      sub_packets_count = @input[(start+7)..(start+17)].join.to_i(2)
+      sub_packets_count = @input[start+7,11].join.to_i(2)
       pointer = start + 18
       sub_packets_count.times(&proc)
     end
