@@ -1,3 +1,5 @@
+require "../utils/grid"
+
 class Program
   @inputs: Array(Array(Int32))
 
@@ -18,11 +20,9 @@ class Program
     count = 0
     flashers = [] of Tuple(Int32, Int32)
 
-    grid.each_index do |i|
-      grid[i].each_index do |j|
-        grid[i][j] += 1
-        flashers << {i, j} if grid[i][j] > 9
-      end
+    each_coordinate(grid) do |i, j|
+      grid[i][j] += 1
+      flashers << {i, j} if grid[i][j] > 9
     end
 
     while !flashers.empty?
@@ -35,10 +35,8 @@ class Program
       end
     end
 
-    grid.each_index do |i|
-      grid[i].each_index do |j|
-        grid[i][j] = 0 if grid[i][j] == -1
-      end
+    each_coordinate(grid) do |i, j|
+      grid[i][j] = 0 if grid[i][j] == -1
     end
     count
   end

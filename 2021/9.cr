@@ -1,3 +1,5 @@
+require "../utils/grid"
+
 class Program
   @inputs: Array(Array(Int32))
 
@@ -27,10 +29,8 @@ class Program
 
   def part_2
     basins = [] of Int32
-    @inputs.each_with_index do |row, y|
-      row.each_with_index do |height, x|
-        basins << flood_fill(x, y) if height != 9
-      end
+    each_with_coordinate(@inputs) do |height, y, x|
+      basins << flood_fill(x, y) if height != 9
     end
     basins.sort.last(3).product
   end

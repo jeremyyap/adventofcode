@@ -13,3 +13,8 @@ def each_with_coordinate(grid : Array(Array(T))) forall T
     end
   end
 end
+
+def print_grid(grid : Array(Array(T))) forall T
+  grid.each { |row| puts row.join }
+  puts
+end
